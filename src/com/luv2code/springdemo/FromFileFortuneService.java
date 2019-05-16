@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import javax.annotation.PostConstruct;
+
 import org.springframework.stereotype.Component;
 
 @Component
@@ -19,6 +21,14 @@ public class FromFileFortuneService implements FortuneService {
 	Random random = new Random();
 
 	public FromFileFortuneService() {
+		System.out.println("FromFileFortuneService: >> inside of default constructor");
+
+	}
+
+	@PostConstruct
+	public void doPostConstruct() {
+		System.out.println("FromFileFortuneService: >> inside of post construct");
+
 		URL url = ClassLoader.getSystemResource(fileName);
 
 		File theFile = new File(url.getPath());
@@ -45,6 +55,8 @@ public class FromFileFortuneService implements FortuneService {
 
 	@Override
 	public String getFortune() {
+		System.out.println("FromFileFortuneService: >> inside of getFortune method");
+
 		int index = random.nextInt(theFortunes.size());
 		return theFortunes.get(index);
 	}
